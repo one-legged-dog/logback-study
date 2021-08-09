@@ -111,7 +111,7 @@ public class LogController {
 ---
 
 1. 태그의 대소문자는 구별하지 않음
-    1. <logger> 태그와 <LOGGER> 태그는 같음
+    1. \<logger\> 태그와 \<LOGGER\> 태그는 같음
 2. ***name attribute*** 지정 필수
 3. 크게 **appender** , **logger** 로 나눔
 4. 동적 갱신 기능 [ 60초 마다 logback-spring.xml 이 바뀌었는지 검사 후 바뀌었다면 프로그램 갱신 ]
@@ -141,8 +141,8 @@ public class LogController {
 
 - appender 설정을 보고 package 와 로그 level 설정
 
-1. **<root>** : 전역설정, 지역으로 설정된 <logger> 존재시 logger 가 default
-2. <logger> : 지역설정, additivity 값으로 root 설정 상속 유무 결정
+1. root : 전역설정, 지역으로 설정된 \<logger\> 존재시 logger 가 default
+2. logger : 지역설정, additivity 값으로 root 설정 상속 유무 결정
     1. default 값 = true
 
 ### 4.3 property
@@ -181,7 +181,7 @@ FileAppender 하위클래스들은 encoder 를 필요로 하기 때문에, layou
 
 ### 4.6 etc
 
-- <incloud> : 내부 블록을 나누어서 xml 로 저장한 후 , <incloud resource="참고할xml파일">식으로 설정 추가가능
+- incloud : 내부 블록을 나누어서 xml 로 저장한 후 , \<incloud resource="참고할xml파일"\>식으로 설정 추가가능
 
 ```xml
 <!-- logback-console-appender.xml  -->
@@ -205,7 +205,7 @@ FileAppender 하위클래스들은 encoder 를 필요로 하기 때문에, layou
 <include resource="logback-console-appender.xml" />
 ```
 
-- <file> : 기록할 파일명과 경로 설정
+- \<file\> : 기록할 파일명과 경로 설정
 
 ```xml
 <springProfile name="prod">
@@ -217,7 +217,7 @@ FileAppender 하위클래스들은 encoder 를 필요로 하기 때문에, layou
 				...
 ```
 
-- <springProperty> : spring의 environment 정보를 가져와 변수로 삼는다.
+- \<springProperty\> : spring의 environment 정보를 가져와 변수로 삼는다.
 
     ```xml
     <!--Environment 내의 프로퍼티들을 개별적으로 설정할 수도 있다.--> 
@@ -225,7 +225,7 @@ FileAppender 하위클래스들은 encoder 를 필요로 하기 때문에, layou
 
     ```
 
-- <property> :
+- \<property\> :
     - resource 속성 : .properties 파일 불러오기
     - name & value 속성 : 값을 가져와서 변수로 삼기 , ${} 로 EL 가능
 
@@ -239,12 +239,12 @@ FileAppender 하위클래스들은 encoder 를 필요로 하기 때문에, layou
     <property name="LOG_PATH" value="${log.config.path}"/>
     ```
 
-- <rollingPolicy class="" > : 로그 순회 방식
+- \<rollingPolicy class="" \> : 로그 순회 방식
     - ch.qos.logback.core.rolling.**TimeBasedRollingPolicy : 일자별로 적용**
     - ch.qos.logback.core.rolling.**SizeAndTimeBasedFNATP** : 일자별 + 크기별 적용
     - ch.qos.logback.core.rolling.**SizeAndTimeBasedRollingPolicy** : 일자 + 크기별 적용
-- <fileNamePattern> : 파일쓰기가 종료된 log 파일명의 패턴 지정
-- <timeBasedFileNamingAndTriggeringPolicy class=""> :  TimeBasedRollingPolicy 선언 후 각 로그파일 크기별 순회를 적용시키고 싶을 때 사용
+- \<fileNamePattern\> : 파일쓰기가 종료된 log 파일명의 패턴 지정
+- \<timeBasedFileNamingAndTriggeringPolicy class=""\> :  TimeBasedRollingPolicy 선언 후 각 로그파일 크기별 순회를 적용시키고 싶을 때 사용
 
     ```xml
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -256,10 +256,10 @@ FileAppender 하위클래스들은 encoder 를 필요로 하기 때문에, layou
     </rollingPolicy>
     ```
 
-- <maxFileSize> : 한 로그 파일 당 최대 용량 지정, IO 성능에 영향을 미치므로 10M 이하 권장 됨. 이름뒤에 .zip, .gz 기입 시 자동 압축
-- <maxHistory> : 최대 저장 일 수, 초과 시 오래된 것부터 삭제
-- <filer> : 로그 외에 필터링이 필요한 경우 사용
-- <springProfile name=""> : 프로필에 따른 설정을 기술하고, 로그를 찍을 append 설정 가능
+- \<maxFileSize\> : 한 로그 파일 당 최대 용량 지정, IO 성능에 영향을 미치므로 10M 이하 권장 됨. 이름뒤에 .zip, .gz 기입 시 자동 압축
+- \<maxHistory\> : 최대 저장 일 수, 초과 시 오래된 것부터 삭제
+- \<filer\> : 로그 외에 필터링이 필요한 경우 사용
+- \<springProfile name=""\> : 프로필에 따른 설정을 기술하고, 로그를 찍을 append 설정 가능
     - 프로필에 따른 appender 설정
 
     ```xml
