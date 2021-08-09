@@ -17,7 +17,7 @@
 - 스프링 : ***logback.xml*** 파일을 ***resources*** 폴더에 생성해야 함
 - 스프링부트 : ***logback-spring.xml*** 파일을 resources 폴더에 생성해야 함
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/208378c2-3db3-4b70-9b0e-f14d614c5f3a/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/208378c2-3db3-4b70-9b0e-f14d614c5f3a/Untitled.png)
+![0](https://user-images.githubusercontent.com/88634338/128663961-2387e368-67f9-465e-a245-0ad882925a5b.png)
 
 ### 1.1 우선순위
 
@@ -104,7 +104,7 @@ public class LogController {
 - Controller 클래스의 로거 = debug 레벨이므로 debug 상위 출력
 - Service 클래스의 로거 = info 이므로 info 상위 출력
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/24bdeefe-1234-4f82-ba7c-591ab3f7aeaf/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/24bdeefe-1234-4f82-ba7c-591ab3f7aeaf/Untitled.png)
+![1](https://user-images.githubusercontent.com/88634338/128664005-43c035bc-0715-4df5-a0ee-26aec39e632d.png)
 
 ## 4. logback-spring.xml 사용
 
@@ -421,11 +421,11 @@ FileAppender 하위클래스들은 encoder 를 필요로 하기 때문에, layou
 
 - 에러 발생시 저장 파일
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4f8ce5b8-834a-4b14-b1ec-38945e7deaed/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4f8ce5b8-834a-4b14-b1ec-38945e7deaed/Untitled.png)
+![2](https://user-images.githubusercontent.com/88634338/128664016-4fcb2bea-1dfc-423e-b145-25516876585a.png)
 
 - JSON 형식 로그 전송 파일
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e099936b-bd60-4e64-9e8e-b144c33c2c8a/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e099936b-bd60-4e64-9e8e-b144c33c2c8a/Untitled.png)
+![3](https://user-images.githubusercontent.com/88634338/128664028-03396843-7b87-4874-9025-16f0898e7ef2.png)
 
 ### 5.1 로그와 기존 설정이 같이 나오며, 기존 로그가 자세한 편이다.
 
