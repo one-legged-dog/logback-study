@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 60 초 마다 설정 파일의 변경을 확인하여 갱신 -->
+<configuration scan="true" scanPeriod="60 seconds">
+    <!-- 기본 로그 설정 가져오기 -->
+    <include resource="org/springframework/boot/logging/logback/base.xml" />
+
+    <springProperty scope="context" name="application_name" source="spring.application.name" />
+
+    <springProfile name="default">
+        <!-- 프로필에 대한 appender 설정 -->
+        <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+                <pattern>%d{yyyy-MM-dd HH:mm:ss}  [%-5p] [%F]%M\(%L\) : %m%n</pattern>
+            </encoder>
+        </appender>
+
+        <property name="LOG_PATH" value="/app/logs/error" />
+        <property name="ERROR_FILE_NAME" value="${application_name}" />
+        <!-- 프로필에 대한 appender 설정 -->
+        <appender name="Error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <!-- 로깅 레벨에 따른 필터설정 -->
+            <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                <!-- 레벨이 에러라면 -->
+                <level>error</level>\
+                <!-- 작동 허용 -->
+                <onMatch>ACCEPT</onMatch>
+                <!-- 아니라면 appender 작동 안함 -->
+                <onMismatch>DENY</onMismatch>
+            </filter>
+            <!-- 저장할 파일 경로+이름-->
+            <file>${LOG_PATH}/${ERROR_FILE_NAME}-json.log</file>
+            <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+                <!-- 찍을 로그 패턴 -->
+                <pattern>%d{yyyy-MM-dd HH:mm:ss}  [%-5p] [%F]%M\(%L\) : %m%n</pattern>
+            </encoder>
+            <!-- 순회정책 -->
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>${LOG_PATH}/${ERROR_FILE_NAME}_%d{yyyy-MM-dd}.%i.json</fileNamePattern>
+                <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                    <maxFileSize>10MB</maxFileSize>
+                </timeBasedFileNamingAndTriggeringPolicy>
+                <!-- 일자별 로그파일 최대 보관주기(~일), 해당 설정일 이상된 파일은 자동으로 제거-->
+                <maxHistory>60</maxHistory>
+            </rollingPolicy>
+        </appender>
+    </springProfile>
+
+    <springProfile name="prod">
+        <!-- 변수 선언 -->
+        <property name="LOG_PATH" value="/app/logs"/>
+        <property name="FILE_NAME" value="${application_name}" />
+
+        <appender name="JSON_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>${LOG_PATH}/${FILE_NAME}-json.log</file>
+            <!-- JSON 형태로 인코딩하는 인코더 -->
+            <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
+            <!-- 시간, 사이즈 둘다 설정되는 녀석 -->
+            <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+                <fileNamePattern>${LOG_PATH}/${FILE_NAME}_%d{yyyy-MM-dd}.%i.json</fileNamePattern>
+                <!-- 한 파일당 최대 용량, 권장사항 10MB 이하 -->
+                <maxFileSize>5MB</maxFileSize>
+                <!-- 최대 저장 일수, 초과시 오래된 로그부터 삭제 -->
+                <maxHistory>3</maxHistory>
+                <!--<MinIndex>1</MinIndex>
+                <MaxIndex>10</MaxIndex>-->
+            </rollingPolicy>
+        </appender>
+    </springProfile>
+
+    <!-- 특정 패키지 로깅레벨 설정 -->
+    <logger name="jdbc.resultset" level="WARN" />
+    <logger name="jdbc.resultsettable" level="WARN" />
+    <logger name="jdbc.audit" level="WARN" />
+    <logger name="jdbc.sqltiming" level="INFO" />
+    <logger name="jdbc.connection" level="WARN" />
+    <logger name="log4jdbc.debug" level="WARN" />
+    <logger name="org.mybatis" level="WARN" />
+    <logger name="javax.activation" level="WARN"/>
+    <logger name="javax.mail" level="WARN"/>
+    <logger name="javax.xml.bind" level="WARN"/>
+    <logger name="ch.qos.logback" level="WARN"/>
+    <logger name="com.codahale.metrics" level="WARN"/>
+    <logger name="com.ryantenney" level="WARN"/>
+    <logger name="com.sun" level="WARN"/>
+    <logger name="com.zaxxer" level="WARN"/>
+    <logger name="org.ehcache" level="WARN"/>
+    <logger name="org.apache" level="WARN"/>
+    <logger name="org.apache.catalina.startup.DigesterFactory" level="OFF"/>
+    <logger name="org.bson" level="WARN"/>
+    <logger name="org.hibernate.validator" level="WARN"/>
+    <logger name="org.hibernate" level="WARN"/>
+    <logger name="org.springframework" level="WARN"/>
+    <logger name="org.springframework.web" level="WARN"/>
+    <logger name="org.springframework.security" level="WARN"/>
+    <logger name="org.springframework.cache" level="WARN"/>
+    <logger name="org.xnio" level="WARN"/>
+    <logger name="sun.rmi" level="WARN"/>
+    <logger name="sun.rmi.transport" level="WARN"/>
+    <logger name="com.netflix" level="WARN"/>
+    <logger name="javax.management.remote.rmi" level="INFO"/>
+    <logger name="org.postgresql" level="INFO"/>
+
+    <!-- 프로필에 따른 appender 추가 -->
+    <springProfile name="default">
+        <root level="DEBUG">
+            <!-- <appender-ref ref="STDOUT" />-->
+            <appender-ref ref="Error" />
+        </root>
+    </springProfile>
+
+    <springProfile name="prod">
+        <root level="INFO">
+            <appender-ref ref="JSON_FILE"/>
+        </root>
+    </springProfile>
+</configuration>
